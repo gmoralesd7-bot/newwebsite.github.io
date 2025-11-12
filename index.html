@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Planificación de Obras y Control de Inventario</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      background: #f7f9fb;
+      color: #1a202c;
+    }
+    header {
+      background: linear-gradient(90deg, #005baa, #1e90ff);
+      color: white;
+      padding: 15px 0;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #003d73;
+      padding: 8px 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      margin: 0 5px;
+    }
+    nav a:hover { background: rgba(255,255,255,0.15); }
+    main { max-width: 1100px; margin: 20px auto; padding: 0 16px; }
+    h2 { border-left: 4px solid #1e90ff; padding-left: 8px; color: #003d73; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 16px;
+      margin-top: 15px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      padding: 16px;
+    }
+    .card h3 { margin-top: 0; color: #2d3748; font-size: 16px; }
+    .card p { font-size: 22px; margin: 8px 0 0; font-weight: bold; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    th, td {
+      border-bottom: 1px solid #e2e8f0;
+      padding: 6px 8px;
+      text-align: left;
+    }
+    th { background: #edf2f7; color: #2d3748; }
+    .btn {
+      background: #1e90ff;
+      color: white;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn:hover { background: #005baa; }
+    footer {
+      background: #003d73;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      margin-top: 25px;
+      font-size: 14px;
+    }
+    input, select {
+      width: 100%;
+      padding: 6px;
+      margin-top: 4px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Planificación de Obras y Control de Inventario</header>
+
+  <nav>
+    <a href="#reporte">Reporte General</a>
+    <a href="#inventario">Inventario</a>
+    <a href="#maquinaria">Maquinaria</a>
+    <a href="#planificacion">Planificación</a>
+    <a href="#personal">Personal</a>
+  </nav>
+
+  <main>
+    <!-- Reporte general -->
+    <section id="reporte">
+      <h2>Reporte General de Efectividad y Atrasos</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Efectividad Global</h3>
+          <p id="efectividad">0%</p>
+          <small>Basado en tareas completadas</small>
+        </div>
+        <div class="card">
+          <h3>Atrasos Detectados</h3>
+          <p id="atrasos">0</p>
+          <small>Proyectos con retraso</small>
+        </div>
+        <div class="card">
+          <h3>Maquinaria Activa</h3>
+          <p id="maqActivas">0</p>
+        </div>
+        <div class="card">
+          <h3>Personal en Turno</h3>
+          <p id="perActivos">0</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inventario -->
+    <section id="inventario">
+      <h2>Control de Inventario</h2>
+      <div class="card">
+        <table id="tabInv">
+          <thead>
+            <tr><th>Material</th><th>Cantidad</th><th>Unidad</th><th>Precio</th><th>Estado</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <button class="btn" onclick="agregarInventario()">Agregar Material</button>
+      </div>
+    </section>
+
+    <!-- Maquinaria -->
+    <section id="maquinaria">
+      <h2>Control de Maquinaria</h2>
+      <div class="card">
+        <table id="tabMaq">
+          <thead>
+            <tr><th>Equipo</th><th>Marca</th><th>Estado</th><th>Último Mantenimiento</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <button class="btn" onclick="agregarMaquina()">Agregar Maquinaria</button>
+      </div>
+    </section>
+
+    <!-- Planificación -->
+    <section id="planificacion">
+      <h2>Planificación de la Obra</h2>
+      <div class="card">
+        <table id="tabPlan">
+          <thead>
+            <tr><th>Actividad</th><th>Responsable</th><th>Inicio</th><th>Fin</th><th>Estado</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <button class="btn" onclick="agregarPlan()">Agregar Actividad</button>
+      </div>
+    </section>
+
+    <!-- Personal -->
+    <section id="personal">
+      <h2>Control del Personal</h2>
+      <div class="card">
+        <table id="tabPer">
+          <thead>
+            <tr><th>Nombre</th><th>Cargo</th><th>Ingreso</th><th>Estado</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <button class="btn" onclick="agregarPersonal()">Agregar Empleado</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>Desarrollado por Gabriela Morales © 2025</footer>
+
+  <script>
+    // Datos simulados
+    const datos = {
+      inventario: [],
+      maquinaria: [],
+      planificacion: [],
+      personal: []
+    };
+
+    function actualizarReporte() {
+      const total = datos.planificacion.length;
+      const completadas = datos.planificacion.filter(a=>a.estado==="Completada").length;
+      const atrasos = datos.planificacion.filter(a=>a.estado==="Atrasada").length;
+      document.getElementById('efectividad').textContent = total ? Math.round((completadas/total)*100)+'%' : '0%';
+      document.getElementById('atrasos').textContent = atrasos;
+      document.getElementById('maqActivas').textContent = datos.maquinaria.filter(m=>m.estado==="Operativa").length;
+      document.getElementById('perActivos').textContent = datos.personal.filter(p=>p.estado==="Activo").length;
+    }
+
+    // Render genérico
+    function renderTabla(id, arr, cols){
+      const tbody=document.querySelector(`#${id} tbody`);
+      tbody.innerHTML='';
+      arr.forEach(obj=>{
+        const tr=document.createElement('tr');
+        cols.forEach(c=>{
+          const td=document.createElement('td');
+          td.textContent=obj[c];
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+      actualizarReporte();
+    }
+
+    function agregarInventario(){
+      const nombre=prompt('Nombre del material:'); if(!nombre) return;
+      const cant=prompt('Cantidad:','0');
+      const unidad=prompt('Unidad (Kg, Unidad, Lt):','Unidad');
+      const precio=prompt('Precio por unidad:','0');
+      const estado=prompt('Estado (Disponible/Agotado):','Disponible');
+      datos.inventario.push({material:nombre,cantidad:cant,unidad,precio,estado});
+      renderTabla('tabInv',datos.inventario,['material','cantidad','unidad','precio','estado']);
+    }
+
+    function agregarMaquina(){
+      const equipo=prompt('Nombre del equipo:'); if(!equipo) return;
+      const marca=prompt('Marca:');
+      const estado=prompt('Estado (Operativa/Reparación):','Operativa');
+      const mant=prompt('Último mantenimiento (fecha):','2025-11-01');
+      datos.maquinaria.push({equipo,marca,estado,ultimo:mant});
+      renderTabla('tabMaq',datos.maquinaria,['equipo','marca','estado','ultimo']);
+    }
+
+    function agregarPlan(){
+      const act=prompt('Actividad:'); if(!act) return;
+      const resp=prompt('Responsable:');
+      const ini=prompt('Fecha inicio (YYYY-MM-DD):','2025-11-10');
+      const fin=prompt('Fecha fin (YYYY-MM-DD):','2025-11-20');
+      const estado=prompt('Estado (Pendiente/Completada/Atrasada):','Pendiente');
+      datos.planificacion.push({actividad:act,responsable:resp,inicio:ini,fin,estado});
+      renderTabla('tabPlan',datos.planificacion,['actividad','responsable','inicio','fin','estado']);
+    }
+
+    function agregarPersonal(){
+      const nombre=prompt('Nombre:'); if(!nombre) return;
+      const cargo=prompt('Cargo:');
+      const ingreso=prompt('Fecha de ingreso:','2025-11-01');
+      const estado=prompt('Estado (Activo/Inactivo):','Activo');
+      datos.personal.push({nombre,cargo,ingreso,estado});
+      renderTabla('tabPer',datos.personal,['nombre','cargo','ingreso','estado']);
+    }
+  </script>
+</body>
+</html>
